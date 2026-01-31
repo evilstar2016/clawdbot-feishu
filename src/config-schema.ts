@@ -61,6 +61,16 @@ export const FeishuGroupSchema = z
   })
   .strict();
 
+const FeishuAccountSchema = z
+  .object({
+    appId: z.string(),
+    appSecret: z.string(),
+    encryptKey: z.string().optional(),
+    verificationToken: z.string().optional(),
+    enabled: z.boolean().optional(),
+  })
+  .strict();
+
 export const FeishuConfigSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -89,6 +99,7 @@ export const FeishuConfigSchema = z
     blockStreamingCoalesce: BlockStreamingCoalesceSchema,
     mediaMaxMb: z.number().positive().optional(),
     heartbeat: ChannelHeartbeatVisibilitySchema,
+    accounts: z.record(z.string(), FeishuAccountSchema).optional(),
     renderMode: RenderModeSchema, // raw = plain text (default), card = interactive card with markdown
   })
   .strict()
